@@ -1,0 +1,309 @@
+(function () {
+  "use strict";
+
+  const config = window.EVENT_CONFIG || {};
+  const storageKey = "birthdayFashionParty:rsvps";
+  const latestResponseKey = "birthdayFashionParty:latestResponseId";
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+  function applyConfig() {
+    $$("[data-config]").forEach((element) => {
+      const key = element.dataset.config;
+      if (Object.prototype.hasOwnProperty.call(config, key)) {
+        element.textContent = config[key] || "";
+      }
+    });
+    document.title = `${config.eventTitle || "The Birthday Issue"} | ${config.birthdayPerson || "RSVP"}`;
+    $("#year").textContent = new Date().getFullYear();
+  }
+
+  function getResponses() {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey)) || [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveResponses(responses) {
+    localStorage.setItem(storageKey, JSON.stringify(responses));
+  }
+
+  function getLatestResponse() {
+    const latestId = localStorage.getItem(latestResponseKey);
+    if (!latestId) return null;
+    return getResponses().find((response) => response.id === latestId) || null;
+  }
+
+  function updateCountdown() {
+    const countdown = $("#countdown");
+    if (!countdown) return;
+
+    const target = new Date(config.eventDateISO || config.date);
+    if (Number.isNaN(target.getTime())) {
+      countdown.textContent = "COUNTDOWN DATE NOT CONFIGURED.";
+      return;
+    }
+
+    const diff = target.getTime() - Date.now();
+    if (diff <= 0) {
+      countdown.textContent = "THE ISSUE HAS CLOSED.";
+      countdown.classList.add("closed");
+      return;
+    }
+
+    const seconds = Math.floor(diff / 1000);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const values = {
+      days,
+      hours,
+      minutes,
+      seconds: remainingSeconds
+    };
+
+    Object.entries(values).forEach(([key, value]) => {
+      const node = $(`[data-time="${key}"]`, countdown);
+      if (node) node.textContent = String(value).padStart(2, "0");
+    });
+  }
+
+  function setError(name, message) {
+    const target = $(`[data-error-for="${name}"]`);
+    if (target) target.textContent = message || "";
+  }
+
+  function clearErrors(form) {
+    $$(".error", form).forEach((node) => {
+      node.textContent = "";
+    });
+  }
+
+  function validateForm(form) {
+    clearErrors(form);
+    let valid = true;
+    const data = new FormData(form);
+    const requiredText = ["fullName", "email", "phone", "costume"];
+
+    requiredText.forEach((name) => {
+      const value = String(data.get(name) || "").trim();
+      if (!value) {
+        setError(name, "Este campo es obligatorio.");
+        valid = false;
+      }
+    });
+
+    const email = String(data.get("email") || "").trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("email", "Ingresa un correo valido.");
+      valid = false;
+    }
+
+    const guests = Number(data.get("guests"));
+    if (!Number.isInteger(guests) || guests < 0) {
+      setError("guests", "Usa un numero igual o mayor a cero.");
+      valid = false;
+    }
+
+    if (!data.get("attendance")) {
+      setError("attendance", "Selecciona una opcion.");
+      valid = false;
+    }
+
+    if (!data.get("dressAgreement")) {
+      setError("dressAgreement", "Debes aceptar esta condicion para continuar.");
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  function formToResponse(form) {
+    const data = new FormData(form);
+    const existing = getLatestResponse();
+    return {
+      id: existing ? existing.id : `rsvp-${Date.now()}`,
+      fullName: String(data.get("fullName") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      attendance: String(data.get("attendance") || ""),
+      costume: String(data.get("costume") || "").trim(),
+      guests: Number(data.get("guests") || 0),
+      comments: String(data.get("comments") || "").trim(),
+      dressAgreement: Boolean(data.get("dressAgreement")),
+      updatedAt: new Date().toISOString()
+    };
+  }
+
+  function fillForm(form, response) {
+    if (!response) return;
+    form.fullName.value = response.fullName || "";
+    form.email.value = response.email || "";
+    form.phone.value = response.phone || "";
+    form.costume.value = response.costume || "";
+    form.guests.value = response.guests || 0;
+    form.comments.value = response.comments || "";
+    form.dressAgreement.checked = Boolean(response.dressAgreement);
+    $$('input[name="attendance"]', form).forEach((input) => {
+      input.checked = input.value === response.attendance;
+    });
+    $("#edit-response").hidden = false;
+  }
+
+  function showConfirmation(response) {
+    const summary = $("#confirmation-summary");
+    summary.innerHTML = "";
+    const lines = [
+      ["Nombre", response.fullName],
+      ["Asistencia", response.attendance],
+      ["Disfraz", response.costume],
+      ["Acompanantes", String(response.guests)]
+    ];
+
+    lines.forEach(([label, value]) => {
+      const p = document.createElement("p");
+      p.textContent = `${label}: ${value}`;
+      summary.appendChild(p);
+    });
+
+    const dialog = $("#confirmation");
+    if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    } else {
+      alert("YOUR NAME IS ON THE LIST.");
+    }
+  }
+
+  function handleRsvp() {
+    const form = $("#rsvp-form");
+    if (!form) return;
+
+    fillForm(form, getLatestResponse());
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!validateForm(form)) return;
+
+      const response = formToResponse(form);
+      const responses = getResponses();
+      const index = responses.findIndex((item) => item.id === response.id);
+      if (index >= 0) {
+        responses[index] = response;
+      } else {
+        responses.push(response);
+      }
+      saveResponses(responses);
+      localStorage.setItem(latestResponseKey, response.id);
+      $("#edit-response").hidden = false;
+      showConfirmation(response);
+    });
+
+    $("#edit-response").addEventListener("click", () => {
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+      form.fullName.focus();
+    });
+
+    $("#close-confirmation").addEventListener("click", () => {
+      $("#confirmation").close();
+    });
+  }
+
+  function handleAdmin() {
+    const form = $("#admin-form");
+    const output = $("#admin-output");
+    if (!form || !output) return;
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const passcode = String(new FormData(form).get("admin-passcode") || "");
+      if (passcode !== config.adminPasscode) {
+        output.textContent = "Clave incorrecta.";
+        return;
+      }
+
+      const responses = getResponses();
+      if (!responses.length) {
+        output.textContent = "No hay inscripciones guardadas en este navegador.";
+        return;
+      }
+
+      output.textContent = JSON.stringify(responses, null, 2);
+    });
+  }
+
+  function handleReveal() {
+    const revealItems = $$(".reveal, .reveal-text");
+    if (!("IntersectionObserver" in window)) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+  }
+
+  function handleCursor() {
+    const cursor = $(".cursor-dot");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!cursor || !finePointer) return;
+
+    window.addEventListener("pointermove", (event) => {
+      cursor.style.left = `${event.clientX}px`;
+      cursor.style.top = `${event.clientY}px`;
+      cursor.style.opacity = "1";
+    });
+
+    $$("a, button, input, textarea").forEach((element) => {
+      element.addEventListener("pointerenter", () => {
+        cursor.style.width = "34px";
+        cursor.style.height = "34px";
+      });
+      element.addEventListener("pointerleave", () => {
+        cursor.style.width = "18px";
+        cursor.style.height = "18px";
+      });
+    });
+  }
+
+  function handleParallax() {
+    const art = $(".cover-art");
+    const motionAllowed = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!art || !motionAllowed) return;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        const offset = Math.min(window.scrollY * 0.08, 54);
+        art.style.transform = `translateY(${offset}px)`;
+      },
+      { passive: true }
+    );
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    applyConfig();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    handleRsvp();
+    handleAdmin();
+    handleReveal();
+    handleCursor();
+    handleParallax();
+  });
+})();
