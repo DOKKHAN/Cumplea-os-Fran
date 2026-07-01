@@ -6,5 +6,10 @@ services:
     image: birthday-fashion-party:latest
     container_name: birthday-fashion-party
     ports:
-      - "${HOST_PORT:-8080}:80"
+      - "${HOST_PORT:-8080}:3000"
+    volumes:
+      - rsvp-data:/data
     restart: unless-stopped
+
+volumes:
+  rsvp-data:

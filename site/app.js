@@ -31,10 +31,37 @@
     localStorage.setItem(storageKey, JSON.stringify(responses));
   }
 
-  function getLatestResponse() {
+  async function fetchResponses(passcode) {
+    const url = passcode ? `/api/rsvps?passcode=${encodeURIComponent(passcode)}` : "/api/rsvps";
+    const response = await fetch(url, { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error("No se pudieron cargar las inscripciones.");
+    const payload = await response.json();
+    return payload.responses || [];
+  }
+
+  async function saveResponseToApi(response) {
+    const apiResponse = await fetch("/api/rsvps", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(response)
+    });
+    if (!apiResponse.ok) throw new Error("No se pudo guardar la inscripcion.");
+    const payload = await apiResponse.json();
+    return payload.response;
+  }
+
+  async function getLatestResponse() {
     const latestId = localStorage.getItem(latestResponseKey);
     if (!latestId) return null;
-    return getResponses().find((response) => response.id === latestId) || null;
+    try {
+      const responses = await fetchResponses(config.adminPasscode);
+      return responses.find((response) => response.id === latestId) || null;
+    } catch (error) {
+      return getResponses().find((response) => response.id === latestId) || null;
+    }
   }
 
   function updateCountdown() {
@@ -123,9 +150,8 @@
     return valid;
   }
 
-  function formToResponse(form) {
+  function formToResponse(form, existing) {
     const data = new FormData(form);
-    const existing = getLatestResponse();
     return {
       id: existing ? existing.id : `rsvp-${Date.now()}`,
       fullName: String(data.get("fullName") || "").trim(),
@@ -179,28 +205,33 @@
     }
   }
 
-  function handleRsvp() {
+  async function handleRsvp() {
     const form = $("#rsvp-form");
     if (!form) return;
 
-    fillForm(form, getLatestResponse());
+    fillForm(form, await getLatestResponse());
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       if (!validateForm(form)) return;
 
-      const response = formToResponse(form);
-      const responses = getResponses();
-      const index = responses.findIndex((item) => item.id === response.id);
-      if (index >= 0) {
-        responses[index] = response;
-      } else {
-        responses.push(response);
+      const response = formToResponse(form, await getLatestResponse());
+      let savedResponse = response;
+      try {
+        savedResponse = await saveResponseToApi(response);
+      } catch (error) {
+        const responses = getResponses();
+        const index = responses.findIndex((item) => item.id === response.id);
+        if (index >= 0) {
+          responses[index] = response;
+        } else {
+          responses.push(response);
+        }
+        saveResponses(responses);
       }
-      saveResponses(responses);
-      localStorage.setItem(latestResponseKey, response.id);
+      localStorage.setItem(latestResponseKey, savedResponse.id);
       $("#edit-response").hidden = false;
-      showConfirmation(response);
+      showConfirmation(savedResponse);
     });
 
     $("#edit-response").addEventListener("click", () => {
@@ -218,7 +249,7 @@
     const output = $("#admin-output");
     if (!form || !output) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const passcode = String(new FormData(form).get("admin-passcode") || "");
       if (passcode !== config.adminPasscode) {
@@ -226,13 +257,22 @@
         return;
       }
 
-      const responses = getResponses();
-      if (!responses.length) {
-        output.textContent = "No hay inscripciones guardadas en este navegador.";
+      try {
+        const responses = await fetchResponses(passcode);
+        if (!responses.length) {
+          output.textContent = "No hay inscripciones guardadas en el contenedor.";
+          return;
+        }
+        output.textContent = JSON.stringify(responses, null, 2);
+      } catch (error) {
+        const responses = getResponses();
+        if (!responses.length) {
+          output.textContent = "No hay inscripciones en la API ni en este navegador.";
+          return;
+        }
+        output.textContent = `API no disponible. Fallback local del navegador:\n${JSON.stringify(responses, null, 2)}`;
         return;
       }
-
-      output.textContent = JSON.stringify(responses, null, 2);
     });
   }
 

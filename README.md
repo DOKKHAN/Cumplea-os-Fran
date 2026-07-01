@@ -1,6 +1,6 @@
 # Birthday Fashion Party
 
-Landing page estatica para promocionar una fiesta de cumpleanos de disfraces con direccion visual editorial, oscura y sofisticada. El proyecto usa HTML, CSS, JavaScript vanilla, Nginx y Docker Compose.
+Landing page para promocionar una fiesta de cumpleanos de disfraces con direccion visual editorial, oscura y sofisticada. El proyecto usa HTML, CSS, JavaScript vanilla, un servidor Node liviano y Docker Compose.
 
 ## Requisitos
 
@@ -62,38 +62,41 @@ eventDateISO: "2026-09-12T21:00:00-03:00"
 
 La paleta esta definida con variables CSS al inicio de `site/styles.css`.
 
-## Como funciona el RSVP local
+## Como funciona el RSVP
 
-El formulario valida campos obligatorios, guarda la respuesta en `localStorage` y muestra una confirmacion editorial con el mensaje:
+El formulario valida campos obligatorios, envia la respuesta a la API interna `/api/rsvps`, la guarda en `/data/rsvps.json` dentro del contenedor y muestra una confirmacion editorial con el mensaje:
 
 ```text
 YOUR NAME IS ON THE LIST.
 ```
 
-Si una persona vuelve desde el mismo navegador, puede editar su respuesta anterior.
+Si una persona vuelve desde el mismo navegador, puede editar su respuesta anterior porque el navegador conserva solo el identificador de su ultimo RSVP.
 
-Tambien existe una utilidad discreta al final de la pagina para revisar registros locales. La clave esta en `site/config.js`:
+Tambien existe una utilidad discreta al final de la pagina para revisar los registros del contenedor. La clave por defecto esta en `site/config.js` y en el servidor:
 
 ```js
 adminPasscode: "frontrow"
 ```
 
-## Advertencia sobre localStorage
+En produccion puedes cambiar la clave con la variable de entorno:
 
-`localStorage` no es una solucion real para recopilar respuestas de multiples invitados. Cada navegador guarda sus propios datos de forma aislada, por lo que la anfitriona no vera respuestas enviadas desde otros dispositivos.
+```text
+ADMIN_PASSCODE=tu-clave
+```
 
-Para una version real, reemplaza este flujo por Google Forms, Tally, Supabase, Airtable, NocoDB o una API propia.
+## Advertencia sobre almacenamiento en contenedor
+
+Las respuestas se guardan en `/data/rsvps.json`. Para que sobrevivan a recreaciones del contenedor, configura persistencia para `/data` en Coolify. El archivo `docker-compose.coolify.yml` declara un volumen llamado `rsvp-data`.
+
+Para una version mas robusta, reemplaza este flujo por Google Forms, Tally, Supabase, Airtable, NocoDB o una API propia con base de datos.
 
 ## Como reemplazar el formulario por un endpoint
 
-En `site/app.js`, busca el listener de `form.addEventListener("submit", ...)` dentro de `handleRsvp()`.
+En `site/app.js`, busca `saveResponseToApi(response)`. Actualmente envia los datos a:
 
-Actualmente el flujo hace esto:
-
-1. Valida el formulario.
-2. Convierte los campos con `formToResponse(form)`.
-3. Guarda en `localStorage`.
-4. Muestra la confirmacion.
+```text
+POST /api/rsvps
+```
 
 Para usar un endpoint, reemplaza el bloque de guardado local por un `fetch`:
 
@@ -116,15 +119,17 @@ Opcion recomendada con Docker Compose:
 - Branch: `main`
 - Build Pack: `Docker Compose`
 - Docker Compose Location: `/docker-compose.coolify.yml`
-- Port Exposes: `80`
+- Port Exposes: `3000`
+- Persistent Storage: montar `/data`
 
-Este archivo usa el `Dockerfile`, que copia `site/` dentro de `/usr/share/nginx/html`. No usa bind mounts ni publica puertos directamente; Coolify enruta el trafico con su proxy.
+Este archivo usa el `Dockerfile`, que levanta un servidor Node liviano, sirve `site/` y guarda las respuestas en `/data/rsvps.json`. No publica puertos directamente; Coolify enruta el trafico con su proxy.
 
 Opcion alternativa:
 
 - Build Pack: `Dockerfile`
 - Dockerfile Location: `/Dockerfile`
-- Port Exposes: `80`
+- Port Exposes: `3000`
+- Persistent Storage: montar `/data`
 
 Si ves la pagina default de Nginx, normalmente significa que Coolify no esta usando este Dockerfile/Compose, o que el deploy anterior quedo cacheado. Ejecuta `Force Redeploy` despues de cambiar el build pack.
 
