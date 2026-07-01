@@ -107,10 +107,24 @@ await fetch("https://tu-endpoint.example/rsvp", {
 
 Despues de una respuesta exitosa, conserva `showConfirmation(response)` para mantener la experiencia visual.
 
+## Deploy en Coolify
+
+Opcion recomendada:
+
+- Source: Public Repository
+- Repository: `https://github.com/DOKKHAN/Cumplea-os-Fran.git`
+- Branch: `main`
+- Build Pack: `Dockerfile`
+- Dockerfile Location: `/Dockerfile`
+- Port Exposes: `80`
+
+Tambien puede desplegarse como Static Build Pack con Base Directory `/site`, pero el Dockerfile evita errores donde Nginx muestra su pagina default porque no se copiaron los archivos estaticos.
+
 ## Estructura
 
 ```text
 .
+├── Dockerfile
 ├── docker-compose.yml
 ├── nginx/
 │   └── default.conf
