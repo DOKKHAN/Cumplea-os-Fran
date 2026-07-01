@@ -141,6 +141,10 @@ async function handleApi(request, response, url) {
 function serveStatic(request, response, url) {
   const pathname = url.pathname === "/" ? "/index.html" : decodeURIComponent(url.pathname);
   const filePath = normalize(join(siteDir, pathname));
+  const extension = extname(filePath);
+  const cacheControl = [".html", ".js", ".json"].includes(extension)
+    ? "no-store"
+    : "public, max-age=604800, immutable";
 
   if (!filePath.startsWith(siteDir)) {
     response.writeHead(403);
@@ -151,7 +155,8 @@ function serveStatic(request, response, url) {
   const stream = createReadStream(filePath);
   stream.on("open", () => {
     response.writeHead(200, {
-      "Content-Type": mimeTypes[extname(filePath)] || "application/octet-stream",
+      "Content-Type": mimeTypes[extension] || "application/octet-stream",
+      "Cache-Control": cacheControl,
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
@@ -160,6 +165,7 @@ function serveStatic(request, response, url) {
   stream.on("error", () => {
     createReadStream(join(siteDir, "index.html")).pipe(response.writeHead(200, {
       "Content-Type": mimeTypes[".html"],
+      "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff"
     }));
   });
