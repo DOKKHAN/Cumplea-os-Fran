@@ -109,22 +109,31 @@ Despues de una respuesta exitosa, conserva `showConfirmation(response)` para man
 
 ## Deploy en Coolify
 
-Opcion recomendada:
+Opcion recomendada con Docker Compose:
 
 - Source: Public Repository
 - Repository: `https://github.com/DOKKHAN/Cumplea-os-Fran.git`
 - Branch: `main`
+- Build Pack: `Docker Compose`
+- Docker Compose Location: `/docker-compose.coolify.yml`
+- Port Exposes: `80`
+
+Este archivo usa el `Dockerfile`, que copia `site/` dentro de `/usr/share/nginx/html`. No usa bind mounts ni publica puertos directamente; Coolify enruta el trafico con su proxy.
+
+Opcion alternativa:
+
 - Build Pack: `Dockerfile`
 - Dockerfile Location: `/Dockerfile`
 - Port Exposes: `80`
 
-Tambien puede desplegarse como Static Build Pack con Base Directory `/site`, pero el Dockerfile evita errores donde Nginx muestra su pagina default porque no se copiaron los archivos estaticos.
+Si ves la pagina default de Nginx, normalmente significa que Coolify no esta usando este Dockerfile/Compose, o que el deploy anterior quedo cacheado. Ejecuta `Force Redeploy` despues de cambiar el build pack.
 
 ## Estructura
 
 ```text
 .
 ├── Dockerfile
+├── docker-compose.coolify.yml
 ├── docker-compose.yml
 ├── nginx/
 │   └── default.conf
