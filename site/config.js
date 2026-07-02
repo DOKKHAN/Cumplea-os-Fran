@@ -1,6 +1,6 @@
 window.EVENT_CONFIG = {
   birthdayPerson: "Fran",
-  eventTitle: "THE BIRTHDAY ISSUE",
+  eventTitle: "HOUSE OF POCHI",
   issueLabel: "VOL. XXVI - ONE NIGHT ONLY",
   subtitle: "Una noche de moda, drama, disfraces y glamour de medianoche.",
   date: "Martes 28 de julio de 2026",
@@ -11,7 +11,7 @@ window.EVENT_CONFIG = {
   city: "Santiago, Chile",
   dressCode: "Editorial Emo Glam, Runway Villains & Costume Fantasy",
   rsvpDeadline: "Por definir",
-  instagramHashtag: "#TheBirthdayIssue",
+  instagramHashtag: "#HouseOfPochi",
   hostMessage: "La invitacion llego. La actitud es obligatoria.",
   adminPasscode: "frontrow"
 };
