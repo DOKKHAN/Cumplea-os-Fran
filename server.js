@@ -146,7 +146,7 @@ function serveStatic(request, response, url) {
   const pathname = url.pathname === "/" ? "/index.html" : decodeURIComponent(url.pathname);
   const filePath = normalize(join(siteDir, pathname));
   const extension = extname(filePath);
-  const cacheControl = [".html", ".js", ".json"].includes(extension)
+  const cacheControl = [".html", ".css", ".js", ".json"].includes(extension)
     ? "no-store"
     : "public, max-age=604800, immutable";
 
