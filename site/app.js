@@ -15,7 +15,7 @@
         element.textContent = config[key] || "";
       }
     });
-    document.title = `${config.eventTitle || "The Birthday Issue"} | ${config.birthdayPerson || "RSVP"}`;
+    document.title = `${config.eventTitle || "House of Pochi"} | ${config.birthdayPerson || "Confirmación"}`;
     $("#year").textContent = new Date().getFullYear();
   }
 
@@ -127,23 +127,23 @@
 
     const email = String(data.get("email") || "").trim();
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("email", "Ingresa un correo valido.");
+      setError("email", "Ingresa un correo válido.");
       valid = false;
     }
 
     const guests = Number(data.get("guests"));
     if (!Number.isInteger(guests) || guests < 0) {
-      setError("guests", "Usa un numero igual o mayor a cero.");
+      setError("guests", "Usa un número igual o mayor a cero.");
       valid = false;
     }
 
     if (!data.get("attendance")) {
-      setError("attendance", "Selecciona una opcion.");
+      setError("attendance", "Selecciona una opción.");
       valid = false;
     }
 
     if (!data.get("dressAgreement")) {
-      setError("dressAgreement", "Debes aceptar esta condicion para continuar.");
+      setError("dressAgreement", "Debes aceptar esta condición para continuar.");
       valid = false;
     }
 
@@ -188,7 +188,7 @@
       ["Nombre", response.fullName],
       ["Asistencia", response.attendance],
       ["Disfraz", response.costume],
-      ["Acompanantes", String(response.guests)]
+      ["Acompañantes", String(response.guests)]
     ];
 
     lines.forEach(([label, value]) => {
@@ -201,7 +201,7 @@
     if (typeof dialog.showModal === "function") {
       dialog.showModal();
     } else {
-      alert("YOUR NAME IS ON THE LIST.");
+      alert("Tu nombre está en la lista.");
     }
   }
 

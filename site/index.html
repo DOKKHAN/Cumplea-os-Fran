@@ -25,9 +25,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260702-countdown-copy">
+    <link rel="stylesheet" href="styles.css?v=20260702-rsvp-localized">
     <script src="config.js?v=20260702-event-collage" defer></script>
-    <script src="app.js?v=20260702-event-collage" defer></script>
+    <script src="app.js?v=20260702-rsvp-localized" defer></script>
   </head>
   <body>
     <div class="cursor-dot" aria-hidden="true"></div>
@@ -37,8 +37,8 @@
       <a class="brand-mark" href="#cover" data-config="eventTitle">HOUSE OF POCHI</a>
       <nav>
         <a href="#details">Info</a>
-        <a href="#dress-code">Dress code</a>
-        <a href="#rsvp">RSVP</a>
+        <a href="#dress-code">Disfraces</a>
+        <a href="#rsvp">Confirmación</a>
       </nav>
     </header>
 
@@ -140,7 +140,7 @@
             <dd data-config="locationAddress">Dirección por confirmar</dd>
           </div>
           <div>
-            <dt>Fecha límite RSVP</dt>
+            <dt>Fecha límite de confirmación</dt>
             <dd data-config="rsvpDeadline">5 de septiembre de 2026</dd>
           </div>
         </dl>
@@ -222,9 +222,9 @@
         <div class="section-index">05</div>
         <div class="rsvp-grid">
           <div class="rsvp-copy reveal">
-            <p class="kicker">Guest List</p>
-            <h2 id="rsvp-title">RSVP</h2>
-            <p>Confirma tu asistencia y deja registrada tu idea de look. Esta version guarda respuestas dentro del contenedor de la aplicacion.</p>
+            <p class="kicker">Lista de invitados</p>
+            <h2 id="rsvp-title">Confirmación de asistencia</h2>
+            <p>Confirma tu asistencia y deja registrada tu idea de look. Esta versión guarda respuestas dentro del contenedor de la aplicación.</p>
           </div>
           <form class="rsvp-form reveal" id="rsvp-form" novalidate>
             <div class="field">
@@ -234,21 +234,21 @@
             </div>
             <div class="field two-col">
               <div>
-                <label for="email">Correo electronico</label>
+                <label for="email">Correo electrónico</label>
                 <input id="email" name="email" type="email" autocomplete="email" required>
                 <small class="error" data-error-for="email"></small>
               </div>
               <div>
-                <label for="phone">Telefono o WhatsApp</label>
-                <input id="phone" name="phone" autocomplete="tel" required>
+                <label for="phone">Instagram</label>
+                <input id="phone" name="phone" autocomplete="off" required>
                 <small class="error" data-error-for="phone"></small>
               </div>
             </div>
             <fieldset class="field">
-              <legend>Asistiras?</legend>
-              <label class="radio-line"><input type="radio" name="attendance" value="Si, estare ahi." required> Si, estare ahi.</label>
-              <label class="radio-line"><input type="radio" name="attendance" value="Aun no estoy seguro/a."> Aun no estoy seguro/a.</label>
-              <label class="radio-line"><input type="radio" name="attendance" value="No podre asistir."> No podre asistir.</label>
+              <legend>¿Asistirás?</legend>
+              <label class="radio-line"><input type="radio" name="attendance" value="Sí, estaré ahí." required> Sí, estaré ahí.</label>
+              <label class="radio-line"><input type="radio" name="attendance" value="Aún no estoy seguro/a."> Aún no estoy seguro/a.</label>
+              <label class="radio-line"><input type="radio" name="attendance" value="No podré asistir."> No podré asistir.</label>
               <small class="error" data-error-for="attendance"></small>
             </fieldset>
             <div class="field two-col">
@@ -258,7 +258,7 @@
                 <small class="error" data-error-for="costume"></small>
               </div>
               <div>
-                <label for="guests">Numero de acompanantes</label>
+                <label for="guests">Número de acompañantes</label>
                 <input id="guests" name="guests" type="number" min="0" max="10" value="0" required>
                 <small class="error" data-error-for="guests"></small>
               </div>
@@ -269,11 +269,11 @@
             </div>
             <label class="checkbox-line">
               <input id="dressAgreement" name="dressAgreement" type="checkbox" required>
-              Entiendo que el dress code es parte de la experiencia.
+              Entiendo que el código de vestuario es parte de la experiencia.
             </label>
             <small class="error" data-error-for="dressAgreement"></small>
             <div class="form-actions">
-              <button class="button-primary" type="submit">JOIN THE LIST</button>
+              <button class="button-primary" type="submit">Confirmar asistencia</button>
               <button class="button-ghost" type="button" id="edit-response" hidden>Editar respuesta</button>
             </div>
           </form>
@@ -304,8 +304,8 @@
 
     <dialog class="confirmation" id="confirmation">
       <div class="confirmation-inner">
-        <p class="kicker">Confirmed</p>
-        <h2>YOUR NAME IS ON THE LIST.</h2>
+        <p class="kicker">Confirmado</p>
+        <h2>Tu nombre está en la lista.</h2>
         <div id="confirmation-summary"></div>
         <button class="button-primary" id="close-confirmation" type="button">Cerrar</button>
       </div>

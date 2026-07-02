@@ -1244,6 +1244,17 @@ p {
   gap: clamp(12px, 3vw, 34px);
 }
 
+.countdown-section .section-heading {
+  max-width: min(100%, 1560px);
+}
+
+.countdown-section .section-heading h2 {
+  max-width: min(100%, 17.5ch);
+  font-size: clamp(4rem, 6.7vw, 8.8rem);
+  line-height: 0.84;
+  text-wrap: balance;
+}
+
 .countdown div {
   display: flex;
   min-width: 0;
@@ -1275,6 +1286,14 @@ p {
 .rsvp-form {
   display: grid;
   gap: 22px;
+}
+
+.rsvp-copy h2 {
+  max-width: 10.5ch;
+  font-size: clamp(2.55rem, 4.8vw, 5.9rem);
+  line-height: 0.88;
+  overflow-wrap: normal;
+  text-wrap: balance;
 }
 
 .field,
