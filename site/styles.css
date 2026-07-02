@@ -204,6 +204,17 @@ p {
   overflow-wrap: anywhere;
 }
 
+.editorial-title,
+.editorial-title span,
+.limited-edition,
+.pochi-label,
+.pochi-rip,
+.pochi-caption {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
 .cover h1 {
   max-width: 11ch;
   margin: 0;
@@ -694,10 +705,11 @@ p {
 .manifesto .editorial-title {
   display: grid;
   gap: clamp(18px, 3vw, 34px);
-  font-size: clamp(3.1rem, 5.55vw, 6.9rem);
+  font-size: clamp(3rem, 4.8vw, 6.2rem);
 }
 
 .manifesto .editorial-title > span:first-child {
+  max-width: 12ch;
   color: var(--color-paper);
   text-shadow: 0 12px 42px rgba(0, 0, 0, 0.48);
 }
@@ -705,7 +717,7 @@ p {
 .limited-edition {
   display: inline-block;
   width: fit-content;
-  max-width: 10.5ch;
+  max-width: 12ch;
   padding: clamp(14px, 2vw, 22px);
   color: var(--color-xerox);
   background: var(--color-newsprint);
@@ -817,13 +829,13 @@ p {
 .pochi-label {
   top: 8%;
   right: 0;
-  max-width: 230px;
+  max-width: 270px;
   padding: 12px 14px;
   color: var(--color-xerox);
   background: var(--color-newsprint);
   box-shadow: 10px 10px 0 rgba(184, 20, 45, 0.64);
   font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 2vw, 1.9rem);
+  font-size: clamp(1.15rem, 1.8vw, 1.65rem);
   font-weight: 700;
   line-height: 0.92;
   transform: rotate(-5deg);
@@ -1526,11 +1538,11 @@ textarea:focus {
   }
 
   .manifesto .editorial-title {
-    font-size: clamp(2.9rem, 14vw, 5.5rem);
+    font-size: clamp(2.6rem, 11vw, 4.8rem);
   }
 
   .limited-edition {
-    max-width: 8.5ch;
+    max-width: 10.5ch;
     padding: 14px;
   }
 
@@ -1546,8 +1558,8 @@ textarea:focus {
   .pochi-label {
     right: auto;
     left: 0;
-    max-width: 180px;
-    font-size: 1.15rem;
+    max-width: 230px;
+    font-size: 1.05rem;
   }
 
   .pochi-rip {
