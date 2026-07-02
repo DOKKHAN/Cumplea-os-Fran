@@ -630,9 +630,53 @@ p {
 
 .manifesto-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
-  gap: clamp(34px, 6vw, 90px);
-  align-items: end;
+  grid-template-columns: minmax(0, 0.86fr) minmax(250px, 0.42fr) minmax(280px, 0.62fr);
+  gap: clamp(24px, 4vw, 68px);
+  align-items: center;
+}
+
+.manifesto {
+  overflow: hidden;
+  color: var(--color-paper);
+  background:
+    radial-gradient(circle at 78% 34%, rgba(184, 20, 45, 0.24), transparent 28%),
+    linear-gradient(110deg, #090909 0%, #14100f 56%, #211214 100%);
+}
+
+.manifesto.section-band {
+  padding-top: clamp(70px, 8vw, 112px);
+  padding-bottom: clamp(70px, 8vw, 112px);
+}
+
+.manifesto::before,
+.manifesto::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.manifesto::before {
+  inset: 0;
+  opacity: 0.22;
+  background:
+    repeating-linear-gradient(90deg, rgba(244, 240, 234, 0.06) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(0deg, rgba(244, 240, 234, 0.04) 0 1px, transparent 1px 10px);
+}
+
+.manifesto::after {
+  left: -8%;
+  bottom: 10%;
+  width: 62%;
+  height: 70px;
+  background:
+    repeating-linear-gradient(-12deg, rgba(244, 240, 234, 0.12) 0 2px, transparent 2px 10px),
+    rgba(255, 255, 255, 0.035);
+  transform: rotate(-7deg);
+}
+
+.manifesto-title-wrap {
+  position: relative;
+  z-index: 2;
 }
 
 .editorial-title,
@@ -647,16 +691,63 @@ p {
   text-transform: uppercase;
 }
 
+.manifesto .editorial-title {
+  display: grid;
+  gap: clamp(18px, 3vw, 34px);
+  font-size: clamp(3.1rem, 5.55vw, 6.9rem);
+}
+
+.manifesto .editorial-title > span:first-child {
+  color: var(--color-paper);
+  text-shadow: 0 12px 42px rgba(0, 0, 0, 0.48);
+}
+
+.limited-edition {
+  display: inline-block;
+  width: fit-content;
+  max-width: 10.5ch;
+  padding: clamp(14px, 2vw, 22px);
+  color: var(--color-xerox);
+  background: var(--color-newsprint);
+  box-shadow:
+    15px 15px 0 rgba(184, 20, 45, 0.72),
+    24px 24px 0 rgba(0, 0, 0, 0.38);
+  line-height: 0.82;
+  transform: rotate(-2.5deg);
+}
+
+.limited-edition::before {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--color-blood);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  content: "HOUSE CUT";
+}
+
 .manifesto-copy {
+  position: relative;
+  z-index: 2;
   max-width: 720px;
   font-size: clamp(1.04rem, 1.6vw, 1.35rem);
 }
 
+.manifesto-copy p {
+  padding-left: 18px;
+  border-left: 3px solid var(--color-blood);
+}
+
 .pull-quote {
-  grid-column: 2;
+  position: relative;
+  z-index: 2;
+  grid-column: 3;
   margin: 0;
-  padding: 26px 0 0;
-  border-top: 1px solid var(--color-line);
+  padding: 26px 0 0 18px;
+  border-top: 1px solid rgba(244, 240, 234, 0.24);
+  border-left: 1px solid var(--color-blood);
   font-family: var(--font-serif);
   font-size: clamp(1.6rem, 3vw, 3rem);
   line-height: 0.98;
@@ -665,6 +756,104 @@ p {
 .pull-quote span,
 .pull-quote strong {
   display: block;
+}
+
+.pochi-collage {
+  position: relative;
+  z-index: 3;
+  min-height: 500px;
+}
+
+.pochi-sticker {
+  position: absolute;
+  right: 4%;
+  bottom: 8%;
+  width: min(82%, 300px);
+  aspect-ratio: 0.57;
+  background: var(--color-paper);
+  filter: drop-shadow(24px 24px 0 rgba(0, 0, 0, 0.38));
+  transform: rotate(4deg);
+}
+
+.pochi-sticker::before {
+  position: absolute;
+  inset: -14px;
+  z-index: -1;
+  background: var(--color-paper);
+  clip-path: polygon(48% 0, 75% 4%, 92% 18%, 100% 44%, 92% 70%, 78% 100%, 22% 100%, 4% 74%, 0 45%, 7% 18%, 24% 5%);
+  content: "";
+}
+
+.pochi-sticker::after {
+  position: absolute;
+  top: -18px;
+  left: 18%;
+  width: 120px;
+  height: 26px;
+  background: rgba(244, 240, 234, 0.74);
+  box-shadow: 0 1px 0 rgba(5, 5, 5, 0.18);
+  content: "";
+  transform: rotate(-8deg);
+}
+
+.pochi-sticker img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 64% 48%;
+  clip-path: polygon(45% 0, 71% 2%, 91% 17%, 99% 45%, 90% 72%, 77% 100%, 22% 100%, 5% 74%, 0 46%, 8% 19%, 24% 4%);
+  filter: saturate(0.9) contrast(1.06);
+}
+
+.pochi-label,
+.pochi-rip,
+.pochi-caption {
+  position: absolute;
+  z-index: 4;
+  text-transform: uppercase;
+}
+
+.pochi-label {
+  top: 8%;
+  right: 0;
+  max-width: 230px;
+  padding: 12px 14px;
+  color: var(--color-xerox);
+  background: var(--color-newsprint);
+  box-shadow: 10px 10px 0 rgba(184, 20, 45, 0.64);
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2vw, 1.9rem);
+  font-weight: 700;
+  line-height: 0.92;
+  transform: rotate(-5deg);
+}
+
+.pochi-rip {
+  left: 0;
+  bottom: 18%;
+  padding: 10px 18px;
+  color: var(--color-paper);
+  background: var(--color-blood);
+  clip-path: polygon(0 15%, 11% 0, 30% 18%, 54% 0, 73% 14%, 100% 8%, 92% 100%, 14% 86%);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  transform: rotate(7deg);
+}
+
+.pochi-caption {
+  right: 8%;
+  bottom: 0;
+  max-width: 270px;
+  padding: 12px 14px;
+  color: var(--color-paper);
+  background: var(--color-xerox);
+  border: 1px solid rgba(244, 240, 234, 0.28);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  transform: rotate(-2deg);
 }
 
 .section-heading {
@@ -1240,6 +1429,16 @@ textarea:focus {
     grid-column: auto;
   }
 
+  .pochi-collage {
+    min-height: 560px;
+    max-width: 520px;
+  }
+
+  .pochi-sticker {
+    right: 10%;
+    width: min(72%, 320px);
+  }
+
   .call-sheet,
   .lookbook,
   .collage-banner {
@@ -1326,6 +1525,40 @@ textarea:focus {
     opacity: 0.34;
   }
 
+  .manifesto .editorial-title {
+    font-size: clamp(2.9rem, 14vw, 5.5rem);
+  }
+
+  .limited-edition {
+    max-width: 8.5ch;
+    padding: 14px;
+  }
+
+  .pochi-collage {
+    min-height: 500px;
+  }
+
+  .pochi-sticker {
+    right: 6%;
+    width: min(76%, 260px);
+  }
+
+  .pochi-label {
+    right: auto;
+    left: 0;
+    max-width: 180px;
+    font-size: 1.15rem;
+  }
+
+  .pochi-rip {
+    bottom: 13%;
+  }
+
+  .pochi-caption {
+    right: 0;
+    max-width: 220px;
+  }
+
   .call-sheet,
   .lookbook,
   .collage-banner,
@@ -1370,6 +1603,14 @@ textarea:focus {
   .collage-note {
     max-width: 130px;
     font-size: 0.95rem;
+  }
+
+  .pochi-collage {
+    min-height: 455px;
+  }
+
+  .pochi-sticker {
+    width: 220px;
   }
 }
 
