@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -30,6 +31,7 @@ body {
   font-family: var(--font-sans);
   line-height: 1.5;
   cursor: default;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -126,9 +128,10 @@ textarea {
 .cover {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+  grid-template-columns: minmax(0, 0.98fr) minmax(340px, 0.9fr);
+  gap: clamp(20px, 4vw, 64px);
   min-height: 100svh;
-  padding: calc(var(--header-height) + 34px) clamp(20px, 5vw, 78px) 48px;
+  padding: calc(var(--header-height) + 26px) clamp(20px, 5vw, 78px) 40px;
   overflow: hidden;
   color: var(--color-paper);
   background:
@@ -183,7 +186,7 @@ textarea {
   position: relative;
   z-index: 2;
   align-self: end;
-  max-width: 880px;
+  max-width: 760px;
 }
 
 .kicker {
@@ -205,17 +208,17 @@ p {
   max-width: 11ch;
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(4.4rem, 15vw, 15rem);
+  font-size: 9.25rem;
   font-weight: 700;
-  line-height: 0.76;
+  line-height: 0.78;
   text-transform: uppercase;
 }
 
 .cover-subtitle {
-  max-width: 620px;
-  margin: 28px 0 26px;
+  max-width: 520px;
+  margin: 22px 0 22px;
   font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-size: 2.15rem;
   line-height: 1;
 }
 
@@ -250,7 +253,7 @@ p {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
-  margin-top: 44px;
+  margin-top: 32px;
   color: var(--color-paper);
   font-size: 0.78rem;
   font-weight: 800;
@@ -276,7 +279,8 @@ p {
 .cover-art {
   position: relative;
   z-index: 1;
-  min-height: 540px;
+  height: clamp(430px, 62svh, 620px);
+  min-height: 0;
   align-self: center;
   filter: drop-shadow(0 26px 60px rgba(0, 0, 0, 0.42));
 }
@@ -1107,6 +1111,90 @@ textarea:focus {
   100% { transform: translate3d(4%, 3%, 0); }
 }
 
+@media (min-width: 1500px) {
+  .cover h1 {
+    font-size: 11.4rem;
+  }
+
+  .cover-subtitle {
+    font-size: 2.7rem;
+  }
+}
+
+@media (max-width: 1240px) and (min-width: 921px) {
+  .cover {
+    grid-template-columns: minmax(0, 0.92fr) minmax(330px, 0.88fr);
+    padding-top: calc(var(--header-height) + 18px);
+  }
+
+  .cover h1 {
+    font-size: 7.3rem;
+  }
+
+  .cover-subtitle {
+    max-width: 430px;
+    font-size: 1.75rem;
+  }
+
+  .cover-meta {
+    font-size: 0.76rem;
+  }
+
+  .cover-art {
+    height: clamp(380px, 58svh, 500px);
+  }
+
+  .special-guest {
+    left: 35%;
+    width: 230px;
+    min-width: 0;
+  }
+
+  .collage-note {
+    max-width: 150px;
+    font-size: 1.25rem;
+  }
+
+  .ink-skull {
+    width: 92px;
+    border-width: 8px;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 921px) {
+  .cover {
+    padding-top: calc(var(--header-height) + 12px);
+    padding-bottom: 28px;
+  }
+
+  .cover h1 {
+    font-size: 6.65rem;
+  }
+
+  .cover-subtitle {
+    margin: 16px 0 16px;
+    font-size: 1.55rem;
+  }
+
+  .costume-stamp {
+    margin-bottom: 16px;
+    padding: 8px 12px;
+  }
+
+  .enter-link {
+    margin-top: 22px;
+  }
+
+  .cover-art {
+    height: 405px;
+  }
+
+  .special-guest {
+    width: 220px;
+    min-width: 0;
+  }
+}
+
 @media (max-width: 920px) {
   .site-header {
     align-items: flex-start;
@@ -1127,10 +1215,25 @@ textarea:focus {
   .cover {
     min-height: auto;
     padding-top: 108px;
+    overflow: hidden;
+  }
+
+  .cover-copy {
+    max-width: 680px;
+  }
+
+  .cover h1 {
+    font-size: 6.25rem;
+    line-height: 0.82;
+  }
+
+  .cover-subtitle {
+    max-width: 460px;
+    font-size: 1.85rem;
   }
 
   .cover-art {
-    min-height: 420px;
+    height: 500px;
   }
 
   .pull-quote {
@@ -1156,7 +1259,7 @@ textarea:focus {
   }
 
   .brand-mark {
-    max-width: 42vw;
+    max-width: 46vw;
   }
 
   .site-header nav {
@@ -1164,11 +1267,22 @@ textarea:focus {
   }
 
   .cover h1 {
-    font-size: clamp(4rem, 24vw, 7.2rem);
+    font-size: 4.6rem;
+    line-height: 0.82;
+  }
+
+  .cover-subtitle {
+    max-width: 320px;
+    font-size: 1.55rem;
+  }
+
+  .cover-meta {
+    gap: 10px 16px;
+    font-size: 0.72rem;
   }
 
   .cover-art {
-    min-height: 430px;
+    height: 500px;
   }
 
   .collage-note {
@@ -1181,15 +1295,31 @@ textarea:focus {
   }
 
   .ink-skull {
-    right: 0;
-    width: 84px;
+    right: 4%;
+    top: 38%;
+    width: 74px;
+    border-width: 7px;
   }
 
   .special-guest {
-    top: 10%;
-    left: 8%;
+    top: 8%;
+    left: 4%;
     min-width: 150px;
-    width: 48vw;
+    width: 170px;
+    padding: 8px 8px 11px;
+  }
+
+  .special-guest figcaption {
+    font-size: 0.63rem;
+  }
+
+  .note-two {
+    right: 0;
+    bottom: 5%;
+  }
+
+  .rip-two {
+    right: 10%;
   }
 
   .section-index {
@@ -1216,6 +1346,30 @@ textarea:focus {
   .button-primary,
   .button-ghost {
     width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .cover {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .cover h1 {
+    font-size: 3.75rem;
+  }
+
+  .cover-art {
+    height: 470px;
+  }
+
+  .special-guest {
+    width: 155px;
+  }
+
+  .collage-note {
+    max-width: 130px;
+    font-size: 0.95rem;
   }
 }
 
