@@ -1022,6 +1022,54 @@ p {
   gap: clamp(36px, 6vw, 86px);
 }
 
+.dress-code {
+  overflow: hidden;
+}
+
+.dress-code .section-heading {
+  max-width: 1040px;
+}
+
+.dress-layout {
+  grid-template-columns: minmax(520px, 1.08fr) minmax(360px, 0.72fr);
+  align-items: end;
+}
+
+.dress-title {
+  display: grid;
+  gap: clamp(8px, 1.2vw, 14px);
+  max-width: 10.2ch;
+}
+
+.dress-title span {
+  display: block;
+}
+
+.dress-title-code {
+  color: var(--color-blood);
+  text-shadow: 0.06em 0.06em 0 rgba(111, 16, 37, 0.18);
+}
+
+.dress-title-optional {
+  width: fit-content;
+  max-width: 11ch;
+  margin-top: clamp(4px, 1vw, 12px);
+  padding: clamp(12px, 1.7vw, 20px) clamp(14px, 2vw, 24px);
+  color: var(--color-paper);
+  background:
+    repeating-linear-gradient(-7deg, rgba(244, 240, 234, 0.08) 0 1px, transparent 1px 8px),
+    var(--color-xerox);
+  box-shadow:
+    12px 12px 0 rgba(184, 20, 45, 0.82),
+    21px 21px 0 rgba(17, 17, 17, 0.14);
+  font-family: var(--font-sans);
+  font-size: clamp(1.15rem, 2.3vw, 2.15rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 0.96;
+  transform: rotate(-2deg);
+}
+
 .dress-intro {
   max-width: 620px;
   align-self: end;
@@ -1045,10 +1093,13 @@ p {
     repeating-linear-gradient(90deg, rgba(244, 240, 234, 0.09) 0 1px, transparent 1px 7px),
     var(--color-ink);
   font-family: var(--font-serif);
-  font-size: clamp(1.7rem, 3.6vw, 4.6rem);
+  font-size: clamp(1.45rem, 2.9vw, 3.7rem);
   font-weight: 700;
-  line-height: 0.82;
+  line-height: 0.88;
   text-transform: uppercase;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
 }
 
 .collage-banner span:nth-child(2) {
@@ -1085,8 +1136,8 @@ p {
 
 .look {
   position: relative;
-  min-height: 310px;
-  padding: 24px;
+  min-height: 285px;
+  padding: clamp(20px, 2.2vw, 30px);
   overflow: hidden;
   background: var(--color-paper);
   transition: background 180ms ease, color 180ms ease;
@@ -1125,12 +1176,15 @@ p {
 .look h3 {
   position: relative;
   z-index: 1;
-  max-width: 12ch;
+  max-width: 13ch;
   margin: 0 0 16px;
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 3vw, 3.5rem);
-  line-height: 0.9;
+  font-size: clamp(1.75rem, 2.35vw, 3rem);
+  line-height: 0.94;
   text-transform: uppercase;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
 }
 
 .look p {
