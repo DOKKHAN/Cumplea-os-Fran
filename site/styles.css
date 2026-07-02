@@ -827,15 +827,15 @@ p {
 }
 
 .pochi-label {
-  top: 8%;
-  right: 0;
-  max-width: 270px;
+  top: 4%;
+  left: -8%;
+  max-width: 250px;
   padding: 12px 14px;
   color: var(--color-xerox);
   background: var(--color-newsprint);
   box-shadow: 10px 10px 0 rgba(184, 20, 45, 0.64);
   font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 1.8vw, 1.65rem);
+  font-size: clamp(1.1rem, 1.65vw, 1.45rem);
   font-weight: 700;
   line-height: 0.92;
   transform: rotate(-5deg);
@@ -1556,9 +1556,8 @@ textarea:focus {
   }
 
   .pochi-label {
-    right: auto;
-    left: 0;
-    max-width: 230px;
+    left: -2%;
+    max-width: 190px;
     font-size: 1.05rem;
   }
 
@@ -1623,6 +1622,12 @@ textarea:focus {
 
   .pochi-sticker {
     width: 220px;
+  }
+
+  .pochi-label {
+    left: 0;
+    max-width: 165px;
+    font-size: 0.95rem;
   }
 }
 
