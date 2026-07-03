@@ -1799,6 +1799,40 @@ textarea:focus {
     font-size: clamp(2.3rem, 10.8vw, 4.2rem);
   }
 
+  .dress-code .section-heading {
+    max-width: 100%;
+  }
+
+  .dress-code .kicker {
+    max-width: calc(100% - 56px);
+  }
+
+  .section-heading .dress-title {
+    max-width: 100%;
+    gap: 8px 14px;
+    font-size: clamp(2.75rem, 13vw, 4.05rem);
+    line-height: 0.86;
+  }
+
+  .dress-title > span:not(.dress-title-optional) {
+    white-space: normal;
+  }
+
+  .dress-title .dress-title-code {
+    max-width: 100%;
+  }
+
+  .dress-title .dress-title-optional {
+    max-width: 100%;
+    padding: 11px 14px;
+    font-size: clamp(0.9rem, 4.2vw, 1.1rem);
+    letter-spacing: 0.1em;
+  }
+
+  .dress-intro {
+    max-width: 100%;
+  }
+
   .details::before {
     right: -14%;
     width: 82vw;
