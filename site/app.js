@@ -336,6 +336,33 @@
     );
   }
 
+  function handleGiftPopup() {
+    const dialog = $("#gift-popup");
+    const closeButton = $("#close-gift-popup");
+    const acceptButton = $("#accept-gift-popup");
+    const storageKey = "birthdayFashionParty:giftPopupSeen";
+    if (!dialog || !closeButton || !acceptButton) return;
+
+    const closePopup = () => {
+      sessionStorage.setItem(storageKey, "true");
+      if (dialog.open) dialog.close();
+    };
+
+    closeButton.addEventListener("click", closePopup);
+    acceptButton.addEventListener("click", closePopup);
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) closePopup();
+    });
+
+    if (sessionStorage.getItem(storageKey) === "true") return;
+
+    window.setTimeout(() => {
+      if (typeof dialog.showModal === "function") {
+        dialog.showModal();
+      }
+    }, 650);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     applyConfig();
     updateCountdown();
@@ -345,5 +372,6 @@
     handleReveal();
     handleCursor();
     handleParallax();
+    handleGiftPopup();
   });
 })();

@@ -1889,6 +1889,133 @@ textarea:focus {
   color: rgba(244, 240, 234, 0.76);
 }
 
+.gift-popup {
+  width: min(760px, calc(100vw - 28px));
+  max-height: min(86svh, 780px);
+  padding: 0;
+  overflow: visible;
+  color: var(--color-paper);
+  background: transparent;
+  border: 0;
+}
+
+.gift-popup::backdrop {
+  background:
+    radial-gradient(circle at 70% 30%, rgba(184, 20, 45, 0.26), transparent 28%),
+    rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(7px);
+}
+
+.gift-popup-inner {
+  position: relative;
+  padding: clamp(28px, 5vw, 58px);
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(244, 240, 234, 0.05) 0 18%, transparent 18%),
+    repeating-linear-gradient(90deg, rgba(244, 240, 234, 0.05) 0 1px, transparent 1px 10px),
+    linear-gradient(120deg, #0b0b0b 0%, #1d1113 58%, #090909 100%);
+  border: 1px solid rgba(244, 240, 234, 0.28);
+  box-shadow:
+    18px 18px 0 rgba(184, 20, 45, 0.68),
+    32px 32px 0 rgba(0, 0, 0, 0.42);
+}
+
+.gift-popup-inner::before,
+.gift-popup-inner::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.gift-popup-inner::before {
+  top: 26px;
+  right: -42px;
+  width: 190px;
+  height: 42px;
+  background:
+    repeating-linear-gradient(-8deg, rgba(244, 240, 234, 0.22) 0 2px, transparent 2px 10px),
+    rgba(244, 240, 234, 0.06);
+  transform: rotate(-11deg);
+}
+
+.gift-popup-inner::after {
+  left: -18px;
+  bottom: 34px;
+  width: 180px;
+  height: 46px;
+  background: var(--color-blood);
+  clip-path: polygon(0 16%, 12% 0, 32% 18%, 55% 0, 82% 14%, 100% 6%, 92% 100%, 8% 86%);
+  opacity: 0.88;
+  transform: rotate(5deg);
+}
+
+.gift-popup h2 {
+  position: relative;
+  z-index: 1;
+  max-width: 8ch;
+  margin: 0 0 24px;
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 8vw, 7.2rem);
+  font-weight: 700;
+  line-height: 0.82;
+  text-transform: uppercase;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+.gift-popup blockquote {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: clamp(18px, 3vw, 28px);
+  color: var(--color-xerox);
+  background: var(--color-newsprint);
+  box-shadow:
+    12px 12px 0 rgba(184, 20, 45, 0.66),
+    20px 20px 0 rgba(0, 0, 0, 0.32);
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 3.2vw, 2.7rem);
+  font-weight: 700;
+  line-height: 0.98;
+  transform: rotate(-1.2deg);
+}
+
+.gift-popup-note {
+  position: relative;
+  z-index: 1;
+  margin: 30px 0 18px;
+  color: rgba(244, 240, 234, 0.72);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.gift-popup-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: var(--color-paper);
+  background: var(--color-blood);
+  border: 1px solid rgba(244, 240, 234, 0.36);
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.gift-popup .button-primary {
+  position: relative;
+  z-index: 1;
+  border-color: var(--color-paper);
+}
+
 .reveal,
 .reveal-text > * {
   opacity: 0;
@@ -2280,6 +2407,34 @@ textarea:focus {
   .button-primary,
   .button-ghost {
     width: 100%;
+  }
+
+  .gift-popup {
+    width: min(calc(100vw - 24px), 520px);
+    max-height: 88svh;
+  }
+
+  .gift-popup-inner {
+    padding: 28px 18px 22px;
+    box-shadow:
+      8px 8px 0 rgba(184, 20, 45, 0.68),
+      14px 14px 0 rgba(0, 0, 0, 0.42);
+  }
+
+  .gift-popup h2 {
+    max-width: 9ch;
+    padding-right: 48px;
+    font-size: clamp(2.9rem, 15vw, 4.4rem);
+  }
+
+  .gift-popup blockquote {
+    padding: 16px;
+    font-size: clamp(1.32rem, 7vw, 1.9rem);
+  }
+
+  .gift-popup-note {
+    margin-top: 26px;
+    font-size: 0.68rem;
   }
 
   .recommendations-header nav {
