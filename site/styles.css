@@ -1890,10 +1890,10 @@ textarea:focus {
 }
 
 .gift-popup {
-  width: min(760px, calc(100vw - 28px));
-  max-height: min(86svh, 780px);
+  width: min(680px, calc(100vw - 28px));
+  max-height: min(88svh, 700px);
   padding: 0;
-  overflow: visible;
+  overflow: auto;
   color: var(--color-paper);
   background: transparent;
   border: 0;
@@ -1908,7 +1908,7 @@ textarea:focus {
 
 .gift-popup-inner {
   position: relative;
-  padding: clamp(28px, 5vw, 58px);
+  padding: clamp(24px, 4vw, 42px);
   overflow: hidden;
   background:
     linear-gradient(135deg, rgba(244, 240, 234, 0.05) 0 18%, transparent 18%),
@@ -1916,8 +1916,8 @@ textarea:focus {
     linear-gradient(120deg, #0b0b0b 0%, #1d1113 58%, #090909 100%);
   border: 1px solid rgba(244, 240, 234, 0.28);
   box-shadow:
-    18px 18px 0 rgba(184, 20, 45, 0.68),
-    32px 32px 0 rgba(0, 0, 0, 0.42);
+    12px 12px 0 rgba(184, 20, 45, 0.68),
+    22px 22px 0 rgba(0, 0, 0, 0.42);
 }
 
 .gift-popup-inner::before,
@@ -1952,10 +1952,10 @@ textarea:focus {
 .gift-popup h2 {
   position: relative;
   z-index: 1;
-  max-width: 8ch;
-  margin: 0 0 24px;
+  max-width: 9ch;
+  margin: 0 0 18px;
   font-family: var(--font-serif);
-  font-size: clamp(3.2rem, 8vw, 7.2rem);
+  font-size: clamp(3rem, 6vw, 5.6rem);
   font-weight: 700;
   line-height: 0.82;
   text-transform: uppercase;
@@ -1968,23 +1968,23 @@ textarea:focus {
   position: relative;
   z-index: 1;
   margin: 0;
-  padding: clamp(18px, 3vw, 28px);
+  padding: clamp(16px, 2.4vw, 24px);
   color: var(--color-xerox);
   background: var(--color-newsprint);
   box-shadow:
-    12px 12px 0 rgba(184, 20, 45, 0.66),
-    20px 20px 0 rgba(0, 0, 0, 0.32);
+    9px 9px 0 rgba(184, 20, 45, 0.66),
+    16px 16px 0 rgba(0, 0, 0, 0.32);
   font-family: var(--font-serif);
-  font-size: clamp(1.35rem, 3.2vw, 2.7rem);
+  font-size: clamp(1.25rem, 2.55vw, 2.2rem);
   font-weight: 700;
-  line-height: 0.98;
+  line-height: 1.02;
   transform: rotate(-1.2deg);
 }
 
 .gift-popup-note {
   position: relative;
   z-index: 1;
-  margin: 30px 0 18px;
+  margin: 24px 0 16px;
   color: rgba(244, 240, 234, 0.72);
   font-size: 0.78rem;
   font-weight: 900;
@@ -2411,29 +2411,32 @@ textarea:focus {
 
   .gift-popup {
     width: min(calc(100vw - 24px), 520px);
-    max-height: 88svh;
+    max-height: 84svh;
   }
 
   .gift-popup-inner {
-    padding: 28px 18px 22px;
+    padding: 22px 16px 18px;
     box-shadow:
-      8px 8px 0 rgba(184, 20, 45, 0.68),
-      14px 14px 0 rgba(0, 0, 0, 0.42);
+      6px 6px 0 rgba(184, 20, 45, 0.68),
+      10px 10px 0 rgba(0, 0, 0, 0.42);
   }
 
   .gift-popup h2 {
-    max-width: 9ch;
+    max-width: 8ch;
     padding-right: 48px;
-    font-size: clamp(2.9rem, 15vw, 4.4rem);
+    margin-bottom: 14px;
+    font-size: clamp(2.55rem, 13vw, 3.8rem);
+    line-height: 0.86;
   }
 
   .gift-popup blockquote {
-    padding: 16px;
-    font-size: clamp(1.32rem, 7vw, 1.9rem);
+    padding: 14px;
+    font-size: clamp(1.1rem, 5.7vw, 1.55rem);
+    line-height: 1.04;
   }
 
   .gift-popup-note {
-    margin-top: 26px;
+    margin-top: 22px;
     font-size: 0.68rem;
   }
 
