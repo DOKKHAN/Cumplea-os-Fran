@@ -14,6 +14,7 @@ const mimeTypes = {
   ".css": "text/css; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
   ".svg": "image/svg+xml",
   ".png": "image/png",
@@ -146,7 +147,7 @@ function serveStatic(request, response, url) {
   const pathname = url.pathname === "/" ? "/index.html" : decodeURIComponent(url.pathname);
   const filePath = normalize(join(siteDir, pathname));
   const extension = extname(filePath);
-  const cacheControl = [".html", ".css", ".js", ".json"].includes(extension)
+  const cacheControl = [".html", ".css", ".js", ".json", ".md"].includes(extension)
     ? "no-store"
     : "public, max-age=604800, immutable";
 

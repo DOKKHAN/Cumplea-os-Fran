@@ -9,7 +9,7 @@ window.EVENT_CONFIG = {
   locationName: "Ubicación secreta",
   locationAddress: "Dirección por confirmar",
   city: "Santiago, Chile",
-  dressCode: "Películas, personajes, música y cosas que le gusten a Pochi",
+  dressCode: "Música, películas, series y musicales que le gustan a Pochi",
   rsvpDeadline: "Por definir",
   instagramHashtag: "#HouseOfPochi",
   hostMessage: "La actitud es obligatoria.",
