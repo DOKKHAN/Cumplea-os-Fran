@@ -1556,16 +1556,21 @@ textarea:focus {
 }
 
 .recommendations-copy h1 {
-  max-width: 10ch;
+  max-width: 12.5ch;
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(4.2rem, 9vw, 10.5rem);
+  font-size: clamp(4rem, 7.8vw, 8.9rem);
   font-weight: 700;
-  line-height: 0.82;
+  line-height: 0.86;
   text-transform: uppercase;
   overflow-wrap: normal;
   word-break: normal;
   hyphens: manual;
+}
+
+.recommendations-copy h1 span {
+  display: block;
+  white-space: nowrap;
 }
 
 .recommendations-copy > p:not(.kicker) {
@@ -2445,7 +2450,9 @@ textarea:focus {
   }
 
   .recommendations-copy h1 {
-    font-size: clamp(3rem, 14vw, 4.8rem);
+    max-width: 100%;
+    font-size: clamp(2.85rem, 12.4vw, 4.25rem);
+    line-height: 0.9;
   }
 
   .recommendations-copy > p:not(.kicker) {
@@ -2551,6 +2558,10 @@ textarea:focus {
 
   .reference-collage {
     min-height: 500px;
+  }
+
+  .recommendations-copy h1 {
+    font-size: clamp(2.55rem, 11.4vw, 3.55rem);
   }
 
   .reference-mcr {
