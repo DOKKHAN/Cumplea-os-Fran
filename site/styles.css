@@ -269,7 +269,6 @@ p {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
-  margin-top: 32px;
   color: var(--color-paper);
   font-size: 0.78rem;
   font-weight: 800;
@@ -290,6 +289,46 @@ p {
 .enter-link:hover::after,
 .enter-link:focus-visible::after {
   width: 104px;
+}
+
+.cover-actions,
+.gift-popup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.cover-actions {
+  margin-top: 32px;
+}
+
+.wishlist-link {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  color: var(--color-paper);
+  background: var(--color-blood);
+  border: 1px solid rgba(244, 240, 234, 0.36);
+  box-shadow:
+    7px 7px 0 rgba(244, 240, 234, 0.11),
+    14px 14px 0 rgba(0, 0, 0, 0.24);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.wishlist-link:hover,
+.wishlist-link:focus-visible {
+  background: var(--color-burgundy);
+  transform: translateY(-2px) rotate(-1.5deg);
 }
 
 .cover-art {
@@ -2021,6 +2060,18 @@ textarea:focus {
   border-color: var(--color-paper);
 }
 
+.gift-popup-actions {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+}
+
+.gift-popup-actions .wishlist-link {
+  box-shadow:
+    7px 7px 0 rgba(184, 20, 45, 0.32),
+    12px 12px 0 rgba(0, 0, 0, 0.24);
+}
+
 .reveal,
 .reveal-text > * {
   opacity: 0;
@@ -2411,6 +2462,16 @@ textarea:focus {
 
   .button-primary,
   .button-ghost {
+    width: 100%;
+  }
+
+  .cover-actions,
+  .gift-popup-actions {
+    align-items: stretch;
+  }
+
+  .cover-actions .wishlist-link,
+  .gift-popup-actions .wishlist-link {
     width: 100%;
   }
 
